@@ -1,4 +1,8 @@
-export function CreateTodo() {
+import { useState } from "react";
+
+export function CreateTodo(props) {
+  const [title, setTitle] = useState("");
+  const [description, serDescription] = useState("");
   return (
     <div>
       <input
@@ -19,7 +23,26 @@ export function CreateTodo() {
         placeholder="description"
       />
       <br />
-      <button>Add a Todo</button>
+      <button
+        style={{
+          padding: 10,
+          margin: 10,
+        }}
+        onClick={() => {
+          fetch("http://localhost:3000/todos"),
+            {
+              method: "POST",
+              body: {
+                title: title,
+                description: description,
+              },
+            }.then(async function (res) {
+              const json = await res.json();
+            });
+        }}
+      >
+        Add a Todo
+      </button>
     </div>
   );
 }
